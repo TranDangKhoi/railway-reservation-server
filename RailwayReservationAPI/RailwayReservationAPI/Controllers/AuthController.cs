@@ -45,7 +45,7 @@ namespace RailwayReservationAPI.Controllers
                 _response.Result = new LoginResponseDTO();
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
-                _response.ErrorMessages.Add("Username or password is incorrect");
+                _response.ErrorMessages = "Username or password is incorrect";
                 return BadRequest(_response);
             }
 
@@ -78,7 +78,7 @@ namespace RailwayReservationAPI.Controllers
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
-                _response.ErrorMessages.Add("Username or password is incorrect");
+                _response.ErrorMessages = "Username or password is incorrect";
                 return BadRequest(_response);
             }
 
@@ -100,7 +100,7 @@ namespace RailwayReservationAPI.Controllers
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
                 // Replace "Username" with "Email"
-                _response.ErrorMessages.Add("E-mail address already exists");
+                _response.ErrorMessages = "E-mail address already exists";
                 return BadRequest(_response);
             }
 
@@ -158,7 +158,7 @@ namespace RailwayReservationAPI.Controllers
             }
             _response.StatusCode = HttpStatusCode.BadRequest;
             _response.IsSuccess = false;
-            _response.ErrorMessages.Add("Oops! Something happened, can't register");
+            _response.ErrorMessages = "Oops! Something happened, can't register";
             return BadRequest(_response);
 
         }
