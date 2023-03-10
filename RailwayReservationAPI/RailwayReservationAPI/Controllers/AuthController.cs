@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -42,7 +44,7 @@ namespace RailwayReservationAPI.Controllers
 
             if (isValid == false)
             {
-                _response.Result = new LoginResponseDTO();
+                _response.Data = new LoginResponseDTO();
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
                 _response.ErrorMessages = "Username or password is incorrect";
@@ -71,7 +73,8 @@ namespace RailwayReservationAPI.Controllers
 
             LoginResponseDTO loginResponse = new()
             {
-                Access_token = tokenHandler.WriteToken(token)
+                Access_token = tokenHandler.WriteToken(token),
+                ApplicationUser = userFromDb,
             };
 
             if (loginResponse.Access_token == null || string.IsNullOrEmpty(loginResponse.Access_token))
@@ -84,7 +87,7 @@ namespace RailwayReservationAPI.Controllers
 
             _response.StatusCode = HttpStatusCode.OK;
             _response.IsSuccess = true;
-            _response.Result = loginResponse;
+            _response.Data = loginResponse;
             return Ok(_response);
 
         }
@@ -148,7 +151,7 @@ namespace RailwayReservationAPI.Controllers
 
                     _response.StatusCode = HttpStatusCode.OK;
                     _response.IsSuccess = true;
-                    _response.Result = registerResponse;
+                    _response.Data = registerResponse;
                     return Ok(_response);
                 }
             }
@@ -162,5 +165,9 @@ namespace RailwayReservationAPI.Controllers
             return BadRequest(_response);
 
         }
+
+
+
+
     }
 }
