@@ -103,7 +103,7 @@ namespace RailwayReservationAPI.Controllers
                 _response.StatusCode = HttpStatusCode.UnprocessableEntity;
                 _response.IsSuccess = false;
                 // Replace "Username" with "Email"
-                _response.ErrorMessages = "E-mail đã tồn tại";
+                _response.ErrorMessages = "E-mail đã tồn tại, vui lòng sử dụng một e-mail khác";
                 return UnprocessableEntity(_response);
             }
 
@@ -147,7 +147,8 @@ namespace RailwayReservationAPI.Controllers
 
                     RegisterResponseDTO registerResponse = new()
                     {
-                        Access_token = tokenHandler.WriteToken(token)
+                        Access_token = tokenHandler.WriteToken(token),
+                        ApplicationUser = newUser,
                     };
 
                     _response.StatusCode = HttpStatusCode.OK;
