@@ -45,10 +45,10 @@ namespace RailwayReservationAPI.Controllers
             if (isValid == false)
             {
                 _response.Data = new LoginResponseDTO();
-                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.StatusCode = HttpStatusCode.UnprocessableEntity;
                 _response.IsSuccess = false;
-                _response.ErrorMessages = "Username or password is incorrect";
-                return BadRequest(_response);
+                _response.ErrorMessages = "E-mail hoặc mật khẩu không chính xác";
+                return UnprocessableEntity(_response);
             }
 
             //we have to generate JWT Token
@@ -79,10 +79,10 @@ namespace RailwayReservationAPI.Controllers
 
             if (loginResponse.Access_token == null || string.IsNullOrEmpty(loginResponse.Access_token))
             {
-                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.StatusCode = HttpStatusCode.UnprocessableEntity;
                 _response.IsSuccess = false;
-                _response.ErrorMessages = "Username or password is incorrect";
-                return BadRequest(_response);
+                _response.ErrorMessages = "E-mail hoặc mật khẩu không chính xác";
+                return UnprocessableEntity(_response);
             }
 
             _response.StatusCode = HttpStatusCode.OK;
@@ -100,21 +100,22 @@ namespace RailwayReservationAPI.Controllers
 
             if (userFromDb != null)
             {
-                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.StatusCode = HttpStatusCode.UnprocessableEntity;
                 _response.IsSuccess = false;
                 // Replace "Username" with "Email"
-                _response.ErrorMessages = "E-mail address already exists";
-                return BadRequest(_response);
+                _response.ErrorMessages = "E-mail đã tồn tại";
+                return UnprocessableEntity(_response);
             }
 
             ApplicationUser newUser = new()
             {
-                UserName = model.Username,
+                UserName = model.Email.Substring(0, model.Email.IndexOf("@")),
                 // Thay thế Username thành Email
                 Email = model.Email,
                 // Thay thế Username thành Email
                 NormalizedEmail = model.Email.ToUpper(),
-                Fullname = model.Fullname
+                Fullname = model.Fullname,
+                Avatar = $"https://ui-avatars.com/api/?background=random&name={model.Fullname}"
             };
 
             try
@@ -161,12 +162,20 @@ namespace RailwayReservationAPI.Controllers
             }
             _response.StatusCode = HttpStatusCode.BadRequest;
             _response.IsSuccess = false;
-            _response.ErrorMessages = "Oops! Something happened, can't register";
+            _response.ErrorMessages = "Có lỗi không ngoài ý muốn!, vui lòng thử lại sau";
             return BadRequest(_response);
 
         }
 
-
+        [HttpPost("logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            _response.IsSuccess = true;
+            _response.StatusCode=HttpStatusCode.OK;
+            _response.Data= null;
+            return Ok(_response);
+        }
 
 
     }
