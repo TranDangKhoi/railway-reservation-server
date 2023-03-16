@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RailwayReservationAPI.Data;
 
@@ -11,9 +12,11 @@ using RailwayReservationAPI.Data;
 namespace RailwayReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230316170646_AddTrainIdToTrainTrack")]
+    partial class AddTrainIdToTrainTrack
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -268,7 +271,12 @@ namespace RailwayReservationAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TrainTrackId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TrainTrackId");
 
                     b.ToTable("Trains");
                 });
@@ -290,8 +298,6 @@ namespace RailwayReservationAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("TrackId");
-
-                    b.HasIndex("TrainId");
 
                     b.ToTable("TrainTracks");
                 });
@@ -347,6 +353,13 @@ namespace RailwayReservationAPI.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RailwayReservationAPI.Models.Train", b =>
+                {
+                    b.HasOne("RailwayReservationAPI.Models.TrainTrack", null)
+                        .WithMany("Trains")
+                        .HasForeignKey("TrainTrackId");
+                });
+
             modelBuilder.Entity("RailwayReservationAPI.Models.TrainTrack", b =>
                 {
                     b.HasOne("RailwayReservationAPI.Models.Track", null)
@@ -354,19 +367,16 @@ namespace RailwayReservationAPI.Migrations
                         .HasForeignKey("TrackId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("RailwayReservationAPI.Models.Train", "Train")
-                        .WithMany()
-                        .HasForeignKey("TrainId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Train");
                 });
 
             modelBuilder.Entity("RailwayReservationAPI.Models.Track", b =>
                 {
                     b.Navigation("TrainTracks");
+                });
+
+            modelBuilder.Entity("RailwayReservationAPI.Models.TrainTrack", b =>
+                {
+                    b.Navigation("Trains");
                 });
 #pragma warning restore 612, 618
         }

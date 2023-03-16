@@ -12,5 +12,8 @@ namespace RailwayReservationAPI.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Train> Trains { get; set; }
+        public DbSet<TrainTrack> TrainTracks { get; set; }
+        public DbSet<Track> Tracks { get; set; }
     }
 }
