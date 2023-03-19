@@ -6,9 +6,10 @@ using Microsoft.OpenApi.Models;
 using RailwayReservationAPI.Data;
 using RailwayReservationAPI.Models;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {

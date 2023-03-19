@@ -11,8 +11,7 @@ namespace RailwayReservationAPI.Models
         public string CarriageNo { get; set; }
         [Required]
         public int TotalSeats { get; set; }
-        public int TrainId { get; set; }
         [ForeignKey("TrainId")]
-        public Train Train { get; set; }
+        public int TrainId { get; set; }
     }
 }
