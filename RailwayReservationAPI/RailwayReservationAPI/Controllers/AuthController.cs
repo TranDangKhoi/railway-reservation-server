@@ -117,7 +117,7 @@ namespace RailwayReservationAPI.Controllers
                 Fullname = model.Fullname,
                 Avatar = $"https://ui-avatars.com/api/?background=random&name={model.Fullname}"
             };
-
+            
             try
             {
                 var result = await _userManager.CreateAsync(newUser, model.Password);
