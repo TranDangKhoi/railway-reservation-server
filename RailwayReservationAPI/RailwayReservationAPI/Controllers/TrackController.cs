@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RailwayReservationAPI.Data;
 using RailwayReservationAPI.Models;
-using RailwayReservationAPI.Models.Dto;
 using System.Net;
 using System.Runtime.CompilerServices;
 
@@ -26,14 +25,16 @@ namespace RailwayReservationAPI.Controllers
         [HttpGet]
         // Tìm ra chuyến tàu dựa theo các tham số được truyền vào như sau:
         // ga đi, ga đến, thời gian khởi hành, thời gian kết thúc
-        public async Task<ActionResult<ApiResponse>> FindTrack(string departureStation)
+        public async Task<ActionResult<ApiResponse>> FindTrack(string departureStation, DateTime departureTime, string arrivalStation, DateTime arrivalTime)
         {
             // Bắt đầu tìm thôi
             var track = _db.Tracks.Include(u => u.TrainTracks)
                 .Include(u => u.TrainTracks)
                 .ThenInclude(u => u.Train)
                 .ThenInclude(u => u.Carriages)
-                .Where(u => u.DepartureStation == departureStation);
+                .Where(u => u.DepartureStation == departureStation)
+                .Where(u => u.DepartureTime >= departureTime && u.ArrivalTime <= arrivalTime)
+                .Where(u => u.ArrivalStation == arrivalStation);
             if (track == null)
             {
                 _response.IsSuccess = false;
