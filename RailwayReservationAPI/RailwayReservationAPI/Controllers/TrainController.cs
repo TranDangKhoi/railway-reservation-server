@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RailwayReservationAPI.Data;
 using RailwayReservationAPI.Models;
 using RailwayReservationAPI.Models.Dto;
@@ -23,7 +24,11 @@ namespace RailwayReservationAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<ApiResponse>> GetAllTrains()
         {
-           var trainList = _db.Trains.ToList();
+           var trainList = _db.Trains
+                .Include(u => u.Carriages)
+                .ThenInclude(u => u.Seats)
+                .Include(u => u.Carriages).ThenInclude(u => u.CarriageType)
+                .ToList();
            if(trainList == null)
             {
                 _response.IsSuccess = false;
@@ -55,26 +60,19 @@ namespace RailwayReservationAPI.Controllers
             {
                 _db.Add(newTrain);
                 _db.SaveChanges();
+                
                 foreach (var carriageDto in dto.CarriageCreateRequestDTOs)
                 {
                     Carriage carriages = new()
                     {
                         TrainId = newTrain.Id,
                         CarriageNo = carriageDto.CarriageNo,
-                        TotalSeats = carriageDto.TotalSeats,
+                        TotalSeats =  carriageDto.TotalSeats,
+                        CarriageTypeId = carriageDto.CarriageTypeId,
+                        Seats = carriageDto.Seats,
                     };
                     _db.Carriages.Add(carriages);
                     _db.SaveChanges();
-                }
-                if (ModelState.IsValid)
-                {
-                    foreach(var carriageTypeDto in dto.CarriageTypeCreateRequestDTOs)
-                    {
-                        CarriageType carriageTypes = new()
-                        {
-                            Name = carriageTypeDto.CarriageTypeName
-                        };
-                    }         
                 }
             }
             _response.IsSuccess = true;

@@ -8,5 +8,8 @@ namespace RailwayReservationAPI.Models.Dto
         public int CarriageNo { get; set; }
         [Required]
         public int TotalSeats { get; set; }
+        public int CarriageTypeId { get; set; }
+
+        public ICollection<Seat> Seats { get; set; }
     }
 }
