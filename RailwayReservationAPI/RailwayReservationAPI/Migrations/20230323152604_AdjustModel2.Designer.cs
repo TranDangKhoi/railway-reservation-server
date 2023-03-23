@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RailwayReservationAPI.Data;
 
@@ -11,9 +12,11 @@ using RailwayReservationAPI.Data;
 namespace RailwayReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230323152604_AdjustModel2")]
+    partial class AdjustModel2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,7 +243,7 @@ namespace RailwayReservationAPI.Migrations
                     b.Property<int>("CarriageNo")
                         .HasColumnType("int");
 
-                    b.Property<int>("CarriageTypeId")
+                    b.Property<int?>("CarriageTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("TotalSeats")
@@ -405,9 +408,7 @@ namespace RailwayReservationAPI.Migrations
                 {
                     b.HasOne("RailwayReservationAPI.Models.CarriageType", "CarriageType")
                         .WithMany()
-                        .HasForeignKey("CarriageTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CarriageTypeId");
 
                     b.HasOne("RailwayReservationAPI.Models.Train", null)
                         .WithMany("Carriages")
