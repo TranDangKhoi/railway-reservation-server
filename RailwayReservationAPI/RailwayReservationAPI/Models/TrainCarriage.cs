@@ -5,9 +5,9 @@ namespace RailwayReservationAPI.Models
     public class TrainCarriage
     {
         public int Id { get; set; }
-        [ForeignKey("TrainId")]
         public int TrainId { get; set; }
-        public Train Train { get; set; }
+        [ForeignKey("CarriageId")]
         public int CarriageId { get; set;}
+        public Carriage Carriage { get; set; }
     }
 }

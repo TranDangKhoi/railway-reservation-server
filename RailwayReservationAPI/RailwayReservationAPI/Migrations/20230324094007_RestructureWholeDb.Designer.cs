@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RailwayReservationAPI.Data;
 
@@ -11,9 +12,11 @@ using RailwayReservationAPI.Data;
 namespace RailwayReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230324094007_RestructureWholeDb")]
+    partial class RestructureWholeDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,6 +253,27 @@ namespace RailwayReservationAPI.Migrations
                     b.ToTable("Carriages");
                 });
 
+            modelBuilder.Entity("RailwayReservationAPI.Models.CarriageSeat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CarriageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SeatId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SeatId");
+
+                    b.ToTable("CarriageSeat");
+                });
+
             modelBuilder.Entity("RailwayReservationAPI.Models.CarriageType", b =>
                 {
                     b.Property<int>("Id")
@@ -274,7 +298,7 @@ namespace RailwayReservationAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CarriageId")
+                    b.Property<int>("SeatNo")
                         .HasColumnType("int");
 
                     b.Property<double>("SeatPrice")
@@ -284,8 +308,6 @@ namespace RailwayReservationAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CarriageId");
 
                     b.ToTable("Seats");
                 });
@@ -359,7 +381,7 @@ namespace RailwayReservationAPI.Migrations
 
                     b.HasIndex("TrainId");
 
-                    b.ToTable("TrainCarriages");
+                    b.ToTable("TrainCarriage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -424,13 +446,15 @@ namespace RailwayReservationAPI.Migrations
                     b.Navigation("CarriageType");
                 });
 
-            modelBuilder.Entity("RailwayReservationAPI.Models.Seat", b =>
+            modelBuilder.Entity("RailwayReservationAPI.Models.CarriageSeat", b =>
                 {
-                    b.HasOne("RailwayReservationAPI.Models.Carriage", null)
-                        .WithMany("Seats")
-                        .HasForeignKey("CarriageId")
+                    b.HasOne("RailwayReservationAPI.Models.Carriage", "Seat")
+                        .WithMany("CarriageSeats")
+                        .HasForeignKey("SeatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Seat");
                 });
 
             modelBuilder.Entity("RailwayReservationAPI.Models.Track", b =>
@@ -463,7 +487,7 @@ namespace RailwayReservationAPI.Migrations
 
             modelBuilder.Entity("RailwayReservationAPI.Models.Carriage", b =>
                 {
-                    b.Navigation("Seats");
+                    b.Navigation("CarriageSeats");
                 });
 
             modelBuilder.Entity("RailwayReservationAPI.Models.Train", b =>

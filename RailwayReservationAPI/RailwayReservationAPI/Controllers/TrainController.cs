@@ -25,9 +25,10 @@ namespace RailwayReservationAPI.Controllers
         public async Task<ActionResult<ApiResponse>> GetAllTrains()
         {
            var trainList = _db.Trains
-                .Include(u => u.Carriages)
-                .ThenInclude(u => u.Seats)
-                .Include(u => u.Carriages).ThenInclude(u => u.CarriageType)
+                .Include(u => u.TrainCarriages)
+                .ThenInclude(u => u.Carriage).ThenInclude(u => u.Seats)
+                .Include(u => u.TrainCarriages)
+                .ThenInclude(u => u.Carriage).ThenInclude(u => u.CarriageType)
                 .ToList();
            if(trainList == null)
             {
@@ -43,7 +44,7 @@ namespace RailwayReservationAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ApiResponse>> CreateTrain([FromBody] TrainCreateRequestDTO dto)
+        public async Task<ActionResult<ApiResponse>> CreateTrain(int carriageId, [FromBody] TrainCreateRequestDTO dto)
         {
             Train existedTrain = _db.Trains.FirstOrDefault(u => u.Name == dto.Name);
             if (existedTrain != null) {
@@ -56,28 +57,19 @@ namespace RailwayReservationAPI.Controllers
             {
                 Name = dto.Name,
             };
-            if (ModelState.IsValid)
-            {
-                _db.Add(newTrain);
-                _db.SaveChanges();
-                
-                foreach (var carriageDto in dto.CarriageCreateRequestDTOs)
-                {
-                    Carriage carriages = new()
-                    {
-                        TrainId = newTrain.Id,
-                        CarriageNo = carriageDto.CarriageNo,
-                        TotalSeats =  carriageDto.TotalSeats,
-                        CarriageTypeId = carriageDto.CarriageTypeId,
-                        Seats = carriageDto.Seats,
-                    };
-                    _db.Carriages.Add(carriages);
-                    _db.SaveChanges();
-                }
-            }
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.Created;
             _response.Data = newTrain;
+            _db.Add(newTrain);
+            _db.SaveChanges();
+            TrainCarriage newTrainCarriage = new()
+            {
+                CarriageId = carriageId,
+                TrainId = newTrain.Id,
+                Carriage = null
+            };
+            _db.Add(newTrainCarriage);
+            _db.SaveChanges();
             return Ok(_response);
         }
     }

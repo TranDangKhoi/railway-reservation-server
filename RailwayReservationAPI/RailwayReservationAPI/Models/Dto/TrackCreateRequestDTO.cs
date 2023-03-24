@@ -6,6 +6,6 @@
         public DateTime DepartureTime { get; set; }
         public string ArrivalStation { get; set; }
         public DateTime ReturnTime { get; set;}
-        public string TrainName { get; set; }
+        public int TrainId { get; set; }
     }
 }

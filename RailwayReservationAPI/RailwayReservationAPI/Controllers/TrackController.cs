@@ -26,12 +26,8 @@ namespace RailwayReservationAPI.Controllers
         public async Task<ActionResult<ApiResponse>> GetAllTracksAndTrains()
         {
             var trainTracks = _db.Tracks
-                .Include(u => u.Train)
-                .ThenInclude(u => u.Carriages)
-                .ThenInclude(u => u.Seats)
-                .Include(u => u.Train)
-                .ThenInclude(u => u.Carriages)
-                .ThenInclude(u => u.CarriageType);
+                .Include(u => u.Train).ThenInclude(u => u.TrainCarriages).ThenInclude(u => u.Carriage)
+                .ThenInclude(u => u.Seats);
             if (trainTracks == null)
             {
                 _response.IsSuccess = false;
@@ -53,12 +49,7 @@ namespace RailwayReservationAPI.Controllers
         {
             // Bắt đầu tìm thôi
             var track = _db.Tracks
-                .Include(u => u.Train)
-                .ThenInclude(u => u.Carriages)
-                .ThenInclude(u => u.Seats)
-                .Include(u => u.Train)
-                .ThenInclude(u => u.Carriages)
-                .ThenInclude(u => u.CarriageType)
+                .Include(u => u.Train).ThenInclude(u => u.TrainCarriages).ThenInclude(u => u.Carriage).ThenInclude(u => u.Seats)
                 .Where(u => u.DepartureStation == departureStation)
                 .Where(u => u.DepartureTime >= departureTime && u.ReturnTime <= returnTime)
                 .Where(u => u.ArrivalStation == arrivalStation);
@@ -89,24 +80,16 @@ namespace RailwayReservationAPI.Controllers
                 return BadRequest(_response);
             }
 
-            Train train = _db.Trains.FirstOrDefault(u => u.Name == dto.TrainName);
-
-            if (train == null)
-            {
-                _response.IsSuccess = false;
-                _response.ErrorMessages = "Không tìm được tàu dựa theo tên bạn cung cấp";
-                _response.StatusCode = HttpStatusCode.NotFound;
-                return BadRequest(_response);
-            }
-
             Track newTrack = new()
             {
                 DepartureStation = dto.DepartureStation,
                 ArrivalStation = dto.ArrivalStation,
                 ReturnTime = dto.ReturnTime,
                 DepartureTime = dto.DepartureTime,
-                Train = train,
+                TrainId = dto.TrainId,
+                Train = null
             };
+
             _db.Add(newTrack);
             _db.SaveChanges();
             _response.IsSuccess = true;

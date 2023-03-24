@@ -7,8 +7,9 @@ namespace RailwayReservationAPI.Models
     {
         public int Id { get; set; }
         public double SeatPrice { get; set; }
-        public int SeatNo { get; set; }
         public int SeatStatus { get; set; }
-        public ICollection<Carriage> Carriages { get; set; }
+        [ForeignKey("CarriageId")]
+        public int CarriageId { get; set; }
+
     }
 }

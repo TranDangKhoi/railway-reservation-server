@@ -10,7 +10,7 @@ namespace RailwayReservationAPI.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public ICollection<Carriage> Carriages { get; set; }
+        public ICollection<TrainCarriage> TrainCarriages { get; set; }
         [NotMapped]
         public int TotalCarriages { get; set; }
     }
