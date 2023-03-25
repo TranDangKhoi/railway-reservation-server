@@ -25,10 +25,8 @@ namespace RailwayReservationAPI.Controllers
         public async Task<ActionResult<ApiResponse>> GetAllTrains()
         {
            var trainList = _db.Trains
-                .Include(u => u.TrainCarriages)
-                .ThenInclude(u => u.Carriage).ThenInclude(u => u.Seats)
-                .Include(u => u.TrainCarriages)
-                .ThenInclude(u => u.Carriage).ThenInclude(u => u.CarriageType)
+                .Include(u => u.Carriages).ThenInclude(u => u.Seats)
+                .Include(u => u.Carriages).ThenInclude(u => u.CarriageType)
                 .ToList();
            if(trainList == null)
             {
@@ -61,14 +59,6 @@ namespace RailwayReservationAPI.Controllers
             _response.StatusCode = HttpStatusCode.Created;
             _response.Data = newTrain;
             _db.Add(newTrain);
-            _db.SaveChanges();
-            TrainCarriage newTrainCarriage = new()
-            {
-                CarriageId = carriageId,
-                TrainId = newTrain.Id,
-                Carriage = null
-            };
-            _db.Add(newTrainCarriage);
             _db.SaveChanges();
             return Ok(_response);
         }

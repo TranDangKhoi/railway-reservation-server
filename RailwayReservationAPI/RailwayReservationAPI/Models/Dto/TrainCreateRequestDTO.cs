@@ -3,5 +3,6 @@
     public class TrainCreateRequestDTO
     {
         public string Name { get; set; }
+
     }
 }

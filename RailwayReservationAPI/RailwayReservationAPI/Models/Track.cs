@@ -19,6 +19,8 @@ namespace RailwayReservationAPI.Models
         [ForeignKey("TrainId")]
         public int TrainId { get; set; }
         public Train Train { get; set; }
-        
+        [NotMapped]
+        public int TotalOpenSeats { get; set; }
+
     }
 }

@@ -25,21 +25,20 @@ namespace RailwayReservationAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<ApiResponse>> GetAllTracksAndTrains()
         {
-            var trainTracks = _db.Tracks
-                .Include(u => u.Train).ThenInclude(u => u.TrainCarriages).ThenInclude(u => u.Carriage)
-                .ThenInclude(u => u.Seats);
-            if (trainTracks == null)
+            var tracks = _db.Tracks
+                .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.Seats);
+            if (tracks == null)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.NotFound;
                 _response.ErrorMessages = "Không tìm thấy chuyến đi nào";
                 return NotFound(_response);
             }
-
+            int totalSeatsInTrain = _db.Carriages.Sum(u => u.TotalSeatsInCarriage);
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
-            _response.Data = trainTracks;
-            return Ok(trainTracks);
+            _response.Data = tracks;
+            return Ok(tracks);
         }
 
         [HttpGet("find")]
@@ -49,7 +48,8 @@ namespace RailwayReservationAPI.Controllers
         {
             // Bắt đầu tìm thôi
             var track = _db.Tracks
-                .Include(u => u.Train).ThenInclude(u => u.TrainCarriages).ThenInclude(u => u.Carriage).ThenInclude(u => u.Seats)
+                .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.Seats)
+                .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.CarriageType)
                 .Where(u => u.DepartureStation == departureStation)
                 .Where(u => u.DepartureTime >= departureTime && u.ReturnTime <= returnTime)
                 .Where(u => u.ArrivalStation == arrivalStation);

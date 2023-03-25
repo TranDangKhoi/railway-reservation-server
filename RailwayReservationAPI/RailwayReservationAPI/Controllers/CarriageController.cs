@@ -22,21 +22,42 @@ namespace RailwayReservationAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ApiResponse>> CreateCarriage(int carriageTypeId, [FromBody]CarriageCreateRequestDTO dto)
+        public async Task<ActionResult<ApiResponse>> CreateCarriage([FromBody]CarriageCreateRequestDTO dto)
         {
             Carriage carriageToBeCreated = new()
             {
                 CarriageNo = dto.CarriageNo,
-                CarriageTypeId = carriageTypeId,
                 Seats = null,
                 CarriageType = null,
             };
             _db.Add(carriageToBeCreated);
-            _db.SaveChanges();           
+            _db.SaveChanges();
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.Created;
             _response.Data = carriageToBeCreated;
             return Ok(carriageToBeCreated);
+        }
+
+        [HttpPut("{carriageId}")]
+        public async Task<ActionResult<ApiResponse>> UpdateCarriage(int carriageId, [FromBody] CarriageUpdateRequestDTO dto)
+        {
+            
+            Carriage foundCarriageFromDb = await _db.Carriages.FindAsync(carriageId);
+            if (foundCarriageFromDb == null)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                return NotFound(_response);
+            }
+            foundCarriageFromDb.TrainId = dto.TrainId;
+            foundCarriageFromDb.CarriageTypeId = dto.CarriageTypeId;
+            _db.Update(foundCarriageFromDb);
+            _db.SaveChanges();
+            _response.IsSuccess = true;
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Data = "Cập nhật thành công";
+            return Ok(_response);
+
         }
     }
 }

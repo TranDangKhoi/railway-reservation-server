@@ -15,7 +15,6 @@ namespace RailwayReservationAPI.Data
         public DbSet<Track> Tracks { get; set; }
         public DbSet<Carriage> Carriages { get; set; }
         public DbSet<CarriageType> CarriageTypes { get; set; }
-        public DbSet<TrainCarriage> TrainCarriages { get; set; }
         public DbSet<Seat> Seats { get; set; }
         
     }
