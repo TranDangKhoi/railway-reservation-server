@@ -34,7 +34,6 @@ namespace RailwayReservationAPI.Controllers
                 _response.ErrorMessages = "Không tìm thấy chuyến đi nào";
                 return NotFound(_response);
             }
-            int totalSeatsInTrain = _db.Carriages.Sum(u => u.TotalSeatsInCarriage);
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
             _response.Data = tracks;
@@ -47,23 +46,29 @@ namespace RailwayReservationAPI.Controllers
         public async Task<ActionResult<ApiResponse>> FindTrack(string departureStation, DateTime departureTime, string arrivalStation, DateTime returnTime)
         {
             // Bắt đầu tìm thôi
-            var track = _db.Tracks
+            var foundTrackFromDb = _db.Tracks
                 .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.Seats)
                 .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.CarriageType)
                 .Where(u => u.DepartureStation == departureStation)
                 .Where(u => u.DepartureTime >= departureTime && u.ReturnTime <= returnTime)
                 .Where(u => u.ArrivalStation == arrivalStation);
-            if (track == null)
+            if (foundTrackFromDb == null)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.NotFound;
                 _response.ErrorMessages = "Không tìm thấy chuyến đi nào phù hợp với yêu cầu của bạn";
                 return NotFound(_response);
             }
+            foreach(var track in foundTrackFromDb)
+            {
+            track.Train.TotalSeats = track.Train.Carriages.Sum(c => c.Seats.Count);
+            track.Train.TotalReversedSeats = track.Train.Carriages.SelectMany(c => c.Seats).Count(s => s.SeatStatus == 0);
+            track.Train.TotalFreeSeats = track.Train.TotalSeats - track.Train.TotalReversedSeats;
+            }
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
-            _response.Data = track;
-            return Ok(track);
+            _response.Data = foundTrackFromDb;
+            return Ok(foundTrackFromDb);
         }
 
         [HttpPost]

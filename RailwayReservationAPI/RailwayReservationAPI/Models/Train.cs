@@ -13,6 +13,11 @@ namespace RailwayReservationAPI.Models
         public ICollection<Carriage> Carriages { get; set; }
         [NotMapped]
         public int TotalCarriages { get; set; }
-        
+        [NotMapped]
+        public int TotalFreeSeats { get; set; }
+        [NotMapped]
+        public int TotalReversedSeats { get; set; }
+        [NotMapped]
+        public int TotalSeats { get; set; }
     }
 }

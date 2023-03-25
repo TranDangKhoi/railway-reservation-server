@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RailwayReservationAPI.Data;
 using RailwayReservationAPI.Models;
 using RailwayReservationAPI.Models.Dto;
+using System.Diagnostics;
 using System.Net;
 
 namespace RailwayReservationAPI.Controllers
@@ -35,10 +36,26 @@ namespace RailwayReservationAPI.Controllers
                 _response.ErrorMessages = "Không có tàu nào tồn tại";
                 return NotFound(_response);
             }
+           
             _response.IsSuccess = false;
             _response.StatusCode = HttpStatusCode.OK;
             _response.Data = trainList;
             return Ok(_response);
+        }
+
+        [HttpGet("trainId")]
+        public async Task<ActionResult<ApiResponse>> GetTrainById(int trainId)
+        {
+            Train foundTrainFromDb = _db.Trains
+                .Include(u => u.Carriages).ThenInclude(u => u.Seats)
+                .Include(u => u.Carriages).ThenInclude(u => u.CarriageType).FirstOrDefault(u => u.Id == trainId);
+            if(foundTrainFromDb == null) {
+                return NotFound();
+            }
+            int totalSeats = foundTrainFromDb.Carriages.Sum(c => c.Seats.Count);
+            int reversedSeats = foundTrainFromDb.Carriages.SelectMany(c => c.Seats).Count(s => s.SeatStatus == 0);
+            int freeSeats = totalSeats - reversedSeats;
+            return Ok();
         }
 
         [HttpPost]
