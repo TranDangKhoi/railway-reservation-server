@@ -54,6 +54,8 @@ namespace RailwayReservationAPI.Controllers
         public async Task<ActionResult<ApiResponse>> FindTrack(string departureStation, DateTime departureTime, string arrivalStation, DateTime returnTime)
         {
             // Bắt đầu tìm thôi
+            int miliseconds = 2000;
+            Thread.Sleep(miliseconds);
             var foundTrackFromDb = _db.Tracks
                 .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.Seats)
                 .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.CarriageType)
