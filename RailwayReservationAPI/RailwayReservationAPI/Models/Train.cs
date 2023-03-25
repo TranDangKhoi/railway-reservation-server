@@ -16,7 +16,7 @@ namespace RailwayReservationAPI.Models
         [NotMapped]
         public int TotalFreeSeats { get; set; }
         [NotMapped]
-        public int TotalReversedSeats { get; set; }
+        public int TotalReservedSeats { get; set; }
         [NotMapped]
         public int TotalSeats { get; set; }
     }

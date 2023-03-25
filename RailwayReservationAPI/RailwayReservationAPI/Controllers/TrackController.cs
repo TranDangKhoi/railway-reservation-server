@@ -26,13 +26,21 @@ namespace RailwayReservationAPI.Controllers
         public async Task<ActionResult<ApiResponse>> GetAllTracksAndTrains()
         {
             var tracks = _db.Tracks
-                .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.Seats);
+                .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.Seats)
+                .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.CarriageType);
             if (tracks == null)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.NotFound;
                 _response.ErrorMessages = "Không tìm thấy chuyến đi nào";
                 return NotFound(_response);
+            }
+            foreach (var track in tracks)
+            {
+                track.Train.TotalCarriages = track.Train.Carriages.Count();
+                track.Train.TotalSeats = track.Train.Carriages.Sum(c => c.Seats.Count);
+                track.Train.TotalReservedSeats = track.Train.Carriages.SelectMany(c => c.Seats).Count(s => s.SeatStatus == 0);
+                track.Train.TotalFreeSeats = track.Train.TotalSeats - track.Train.TotalReservedSeats;
             }
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
@@ -61,9 +69,10 @@ namespace RailwayReservationAPI.Controllers
             }
             foreach(var track in foundTrackFromDb)
             {
+            track.Train.TotalCarriages = track.Train.Carriages.Count();
             track.Train.TotalSeats = track.Train.Carriages.Sum(c => c.Seats.Count);
-            track.Train.TotalReversedSeats = track.Train.Carriages.SelectMany(c => c.Seats).Count(s => s.SeatStatus == 0);
-            track.Train.TotalFreeSeats = track.Train.TotalSeats - track.Train.TotalReversedSeats;
+            track.Train.TotalReservedSeats = track.Train.Carriages.SelectMany(c => c.Seats).Count(s => s.SeatStatus == 0);
+            track.Train.TotalFreeSeats = track.Train.TotalSeats - track.Train.TotalReservedSeats;
             }
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
@@ -91,6 +100,7 @@ namespace RailwayReservationAPI.Controllers
                 ArrivalStation = dto.ArrivalStation,
                 ReturnTime = dto.ReturnTime,
                 DepartureTime = dto.DepartureTime,
+                ArrivalTime = dto.ArrivalTime,
                 TrainId = dto.TrainId,
                 Train = null
             };

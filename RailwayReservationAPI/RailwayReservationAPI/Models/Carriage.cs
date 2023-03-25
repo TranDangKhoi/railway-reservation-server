@@ -15,9 +15,5 @@ namespace RailwayReservationAPI.Models
         public CarriageType CarriageType { get; set; }
         [ForeignKey("TrainId")]
         public int TrainId { get; set; }
-        [NotMapped]
-        public int TotalOpenSeatsInCarriage { get; set; }
-        [NotMapped]
-        public int TotalSeatsInCarriage { get; set; }
     }
 }

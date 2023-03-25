@@ -52,9 +52,6 @@ namespace RailwayReservationAPI.Controllers
             if(foundTrainFromDb == null) {
                 return NotFound();
             }
-            int totalSeats = foundTrainFromDb.Carriages.Sum(c => c.Seats.Count);
-            int reversedSeats = foundTrainFromDb.Carriages.SelectMany(c => c.Seats).Count(s => s.SeatStatus == 0);
-            int freeSeats = totalSeats - reversedSeats;
             return Ok();
         }
 
