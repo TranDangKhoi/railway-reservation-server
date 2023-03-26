@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RailwayReservationAPI.Data;
 using RailwayReservationAPI.Models;
 using RailwayReservationAPI.Models.Dto;
+using System;
 using System.Net;
 using System.Runtime.CompilerServices;
 
@@ -47,11 +48,31 @@ namespace RailwayReservationAPI.Controllers
             _response.Data = tracks;
             return Ok(tracks);
         }
+        [HttpGet("{trackId}")]
+        public async Task<ActionResult<ApiResponse>> GetTrackById(int trackId)
+        {
+            //int miliseconds = 2000;
+            //Thread.Sleep(miliseconds);
+            Track foundTrack = _db.Tracks
+                .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.Seats)
+                .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.CarriageType).FirstOrDefault(u => u.Id == trackId);
+            if (foundTrack == null)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ErrorMessages = "Chuyến đi không tồn tại, vui lòng kiểm tra lại";
+                return NotFound(_response);
+            }
+            _response.IsSuccess = true;
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Data = foundTrack;
+            return Ok(foundTrack);
+        }
 
         [HttpGet("find")]
         // Tìm ra chuyến tàu dựa theo các tham số được truyền vào như sau:
-        // ga đi, ga đến, thời gian khởi hành, thời gian kết thúc
-        public async Task<ActionResult<ApiResponse>> FindTrack(string departureStation, DateTime departureTime, string arrivalStation, DateTime returnTime)
+        // ga đi, ga đến, thời gian khởi hành
+        public async Task<ActionResult<ApiResponse>> FindTrack(string departureStation, DateTime departureTime, string arrivalStation)
         {
             // Bắt đầu tìm thôi
             int miliseconds = 2000;
@@ -60,7 +81,8 @@ namespace RailwayReservationAPI.Controllers
                 .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.Seats)
                 .Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.CarriageType)
                 .Where(u => u.DepartureStation == departureStation)
-                .Where(u => u.DepartureTime >= departureTime && u.ReturnTime <= returnTime)
+                // 00:00:00 của ngày đó và 23:59:59 của ngày đó
+                .Where(u => u.DepartureTime.Date == departureTime.Date && u.DepartureTime.TimeOfDay >= departureTime.TimeOfDay)
                 .Where(u => u.ArrivalStation == arrivalStation);
             if (foundTrackFromDb == null)
             {
@@ -87,7 +109,7 @@ namespace RailwayReservationAPI.Controllers
         {
             Track existedTrainTracks = _db.Tracks
                 .Include(u => u.Train)
-                .FirstOrDefault(u => u.DepartureStation == dto.DepartureStation && u.DepartureTime == dto.DepartureTime && u.ReturnTime == dto.ReturnTime && u.ArrivalStation == dto.ArrivalStation);
+                .FirstOrDefault(u => u.DepartureStation == dto.DepartureStation && u.DepartureTime == dto.DepartureTime && u.ArrivalStation == dto.ArrivalStation);
             if (existedTrainTracks != null)
             {
                 _response.IsSuccess = false;
@@ -100,7 +122,6 @@ namespace RailwayReservationAPI.Controllers
             {
                 DepartureStation = dto.DepartureStation,
                 ArrivalStation = dto.ArrivalStation,
-                ReturnTime = dto.ReturnTime,
                 DepartureTime = dto.DepartureTime,
                 ArrivalTime = dto.ArrivalTime,
                 TrainId = dto.TrainId,

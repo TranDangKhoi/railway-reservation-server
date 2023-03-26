@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RailwayReservationAPI.Data;
 using RailwayReservationAPI.Models;
 using RailwayReservationAPI.Models.Dto;
@@ -19,6 +20,23 @@ namespace RailwayReservationAPI.Controllers
         {
             _db = db;
             _response = new ApiResponse();
+        }
+
+        [HttpGet("{carriageId}")]
+        public async Task<ActionResult<ApiResponse>> GetSeatsByCarriageId(int carriageId)
+        {
+            var foundSeatsFromDb = _db.Seats.Where(c => c.CarriageId == carriageId);
+            if (foundSeatsFromDb == null)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = "Không tìm thấy toa tàu";
+                _response.StatusCode = HttpStatusCode.NotFound;
+                return NotFound(_response);
+            }
+            _response.IsSuccess = true;
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Data = foundSeatsFromDb;
+            return Ok(_response);
         }
         [HttpPost]
         public async Task<ActionResult<ApiResponse>> CreateSeat([FromBody] SeatCreateRequestDTO dto)

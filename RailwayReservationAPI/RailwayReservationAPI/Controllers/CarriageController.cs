@@ -21,6 +21,23 @@ namespace RailwayReservationAPI.Controllers
             _response = new ApiResponse();
         }
 
+        [HttpGet("{carriageId}")]
+        public async Task<ActionResult<ApiResponse>> GetCarriageDetailsById(int carriageId)
+        {
+            Carriage foundCarriageFromDb = _db.Carriages.Include(c => c.Seats).Include(c => c.CarriageType).FirstOrDefault(c => c.Id == carriageId);
+            if (foundCarriageFromDb == null)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = "Không tìm thấy toa tàu";
+                _response.StatusCode = HttpStatusCode.NotFound;
+                return NotFound(_response);
+            }
+            _response.IsSuccess = true;
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Data = foundCarriageFromDb;
+            return Ok(foundCarriageFromDb);
+        }
+
         [HttpPost]
         public async Task<ActionResult<ApiResponse>> CreateCarriage([FromBody]CarriageCreateRequestDTO dto)
         {
@@ -56,7 +73,7 @@ namespace RailwayReservationAPI.Controllers
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
             _response.Data = "Cập nhật thành công";
-            return Ok(_response);
+            return Ok(foundCarriageFromDb);
 
         }
     }
