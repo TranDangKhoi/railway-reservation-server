@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RailwayReservationAPI.Data;
 using RailwayReservationAPI.Models;
 using RailwayReservationAPI.Models.Dto;
+using RailwayReservationAPI.Utility;
 using System.Net;
 
 namespace RailwayReservationAPI.Controllers
@@ -19,7 +20,7 @@ namespace RailwayReservationAPI.Controllers
             _response = new();
             _db = db;
         }
-
+        // 26a3cb2a-360a-451d-b69f-da1c93c0f9fe
         [HttpGet("get-cart")]
         public async Task<ActionResult<ApiResponse>> GetShoppingCart(string userId)
         {
@@ -62,14 +63,21 @@ namespace RailwayReservationAPI.Controllers
             {
                 _response.StatusCode = HttpStatusCode.NotFound;
                 _response.IsSuccess = false;
-                _response.ErrorMessages = "Lỗi!";
+                _response.ErrorMessages = "Lỗi! Không tìm được chiếc ghế bạn yêu cầu";
                 return NotFound(_response);
+            }
+            if(seat.SeatStatus == SD.status_reserved)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = "Ghế đã được đặt, vui lòng chọn ghế khác";
+                return BadRequest(_response);
             }
             if (shoppingCart == null)
             {
                 // Trường hợp 1: Người dùng chưa có giỏ hàng
 
-                // Create a shopping cart for current user in the database & add cart item if the user hasn't add any items to the cart
+                // Tạo giỏ hàng mới trong database và thêm sản phẩm người dùng vừa mới gửi từ request vào
                 ShoppingCart newCart = new() { UserId = userId };
                 _db.ShoppingCarts.Add(newCart);
                 _db.SaveChanges();
@@ -98,7 +106,7 @@ namespace RailwayReservationAPI.Controllers
                     CartItem newCartItem = new()
                     {
                         SeatId = model.SeatId,
-                        ShoppingCartId = shoppingCart.Id,
+                        ShoppingCartId = shoppingCart.Id,                        
                         // Nếu không set cái này là null thì sẽ lỗi
                         Seat = null
                     };
