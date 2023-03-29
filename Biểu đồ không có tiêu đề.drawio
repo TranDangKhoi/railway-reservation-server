@@ -1,0 +1,55 @@
+<mxfile host="app.diagrams.net" modified="2023-03-29T16:18:02.032Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="AQad1DgecVuLNmlN5U6i" version="21.0.8" type="github">
+  <diagram name="Trang-1" id="EH0emdMKXZyjcekoXMyX">
+    <mxGraphModel dx="1816" dy="527" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DognbOC37Y5BziQcNYbC-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="DognbOC37Y5BziQcNYbC-1" target="DognbOC37Y5BziQcNYbC-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="DognbOC37Y5BziQcNYbC-1" target="DognbOC37Y5BziQcNYbC-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="DognbOC37Y5BziQcNYbC-1" target="DognbOC37Y5BziQcNYbC-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-1" value="Người dùng nhấn vào ghế muốn thêm vào giỏ vé" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="DognbOC37Y5BziQcNYbC-2" target="DognbOC37Y5BziQcNYbC-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-2" value="Chiếc ghế đó đã có trong giỏ của người dùng" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="200" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="DognbOC37Y5BziQcNYbC-3" target="DognbOC37Y5BziQcNYbC-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="DognbOC37Y5BziQcNYbC-3" target="DognbOC37Y5BziQcNYbC-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-3" value="Chiếc ghế đó đã có người khác đặt" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-30" y="200" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="DognbOC37Y5BziQcNYbC-4" target="DognbOC37Y5BziQcNYbC-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-4" value="Chiếc ghế đó chưa có trong giỏ của người dùng" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="200" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-8" value="Code bên Client khiến cho chiếc ghế click vào không invoke gì cả" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-160" y="360" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-10" value="Nếu cố gắng gọi = API thì sẽ trả ra lỗi và return Unauthorized&lt;br&gt;(Nếu có quyền thì return BadRequest)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="360" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-13" value="Khi click vào sẽ xóa sản phẩm đó ra khỏi giỏ" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="360" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DognbOC37Y5BziQcNYbC-15" value="Khi click vào sẽ thêm sản phẩm đó vào giỏ" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="360" width="160" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
