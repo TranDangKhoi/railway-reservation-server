@@ -16,6 +16,9 @@ namespace RailwayReservationAPI.Data
         public DbSet<Carriage> Carriages { get; set; }
         public DbSet<CarriageType> CarriageTypes { get; set; }
         public DbSet<Seat> Seats { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+
         
     }
 }

@@ -271,6 +271,29 @@ namespace RailwayReservationAPI.Migrations
                     b.ToTable("CarriageTypes");
                 });
 
+            modelBuilder.Entity("RailwayReservationAPI.Models.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("SeatId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShoppingCartId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SeatId");
+
+                    b.HasIndex("ShoppingCartId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("RailwayReservationAPI.Models.Seat", b =>
                 {
                     b.Property<int>("Id")
@@ -280,6 +303,9 @@ namespace RailwayReservationAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CarriageId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SeatNo")
                         .HasColumnType("int");
 
                     b.Property<double>("SeatPrice")
@@ -293,6 +319,22 @@ namespace RailwayReservationAPI.Migrations
                     b.HasIndex("CarriageId");
 
                     b.ToTable("Seats");
+                });
+
+            modelBuilder.Entity("RailwayReservationAPI.Models.ShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("RailwayReservationAPI.Models.Track", b =>
@@ -412,6 +454,23 @@ namespace RailwayReservationAPI.Migrations
                     b.Navigation("CarriageType");
                 });
 
+            modelBuilder.Entity("RailwayReservationAPI.Models.CartItem", b =>
+                {
+                    b.HasOne("RailwayReservationAPI.Models.Seat", "Seat")
+                        .WithMany()
+                        .HasForeignKey("SeatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RailwayReservationAPI.Models.ShoppingCart", null)
+                        .WithMany("CartItems")
+                        .HasForeignKey("ShoppingCartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Seat");
+                });
+
             modelBuilder.Entity("RailwayReservationAPI.Models.Seat", b =>
                 {
                     b.HasOne("RailwayReservationAPI.Models.Carriage", null)
@@ -435,6 +494,11 @@ namespace RailwayReservationAPI.Migrations
             modelBuilder.Entity("RailwayReservationAPI.Models.Carriage", b =>
                 {
                     b.Navigation("Seats");
+                });
+
+            modelBuilder.Entity("RailwayReservationAPI.Models.ShoppingCart", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("RailwayReservationAPI.Models.Train", b =>
