@@ -23,9 +23,7 @@ namespace RailwayReservationAPI.Controllers
         // 26a3cb2a-360a-451d-b69f-da1c93c0f9fe
         [HttpGet("get-cart")]
         public async Task<ActionResult<ApiResponse>> GetShoppingCart(string userId)
-        {
-            try
-            {
+        {   
                 ShoppingCart shoppingCart;
                 if (string.IsNullOrEmpty(userId))
                 {
@@ -44,20 +42,14 @@ namespace RailwayReservationAPI.Controllers
                 }
                 _response.Data = shoppingCart;
                 _response.StatusCode = HttpStatusCode.OK;
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.ErrorMessages = ex.ToString();
-                _response.StatusCode = HttpStatusCode.BadRequest;
-            }
-            return _response;
+                return Ok(shoppingCart);
+            
         }
 
         [HttpPost("add-to-cart")]
-        public async Task<ActionResult<ApiResponse>> AddOrUpdateItemInCart(string userId, [FromBody] CartRequestDTO model)
+        public async Task<ActionResult<ApiResponse>> AddOrUpdateItemInCart([FromBody] CartRequestDTO model)
         {
-            ShoppingCart shoppingCart = _db.ShoppingCarts.Include(u => u.CartItems).FirstOrDefault(u => u.UserId == userId);
+            ShoppingCart shoppingCart = _db.ShoppingCarts.Include(u => u.CartItems).FirstOrDefault(u => u.UserId == model.UserId);
             Seat seat = _db.Seats.FirstOrDefault(u => u.Id == model.SeatId);
             if (seat == null)
             {
@@ -78,7 +70,7 @@ namespace RailwayReservationAPI.Controllers
                 // Trường hợp 1: Người dùng chưa có giỏ hàng
 
                 // Tạo giỏ hàng mới trong database và thêm sản phẩm người dùng vừa mới gửi từ request vào
-                ShoppingCart newCart = new() { UserId = userId };
+                ShoppingCart newCart = new() { UserId = model.UserId };
                 _db.ShoppingCarts.Add(newCart);
                 _db.SaveChanges();
                 // Thêm sản phẩm đó vào giỏ dựa theo RequestDTO
