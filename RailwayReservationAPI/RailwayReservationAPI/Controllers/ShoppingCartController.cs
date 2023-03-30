@@ -33,14 +33,17 @@ namespace RailwayReservationAPI.Controllers
                 }
                 else
                 {
-                    shoppingCart = await _db.ShoppingCarts.Include(u => u.CartItems)
+                    shoppingCart =  _db.ShoppingCarts.Include(u => u.CartItems)
                     .ThenInclude(u => u.Seat).ThenInclude(u => u.Carriage).ThenInclude(u => u.Train).ThenInclude(u => u.Track)
                     .Include(u => u.CartItems)
                     .ThenInclude(u => u.Seat).ThenInclude(u => u.Carriage).ThenInclude(u => u.CarriageType)
-                    .FirstOrDefaultAsync(u => u.UserId == userId);
+                    .FirstOrDefault(u => u.UserId == userId);
                 }
-                shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => 1 * u.Seat.SeatPrice); 
-                return Ok(shoppingCart);
+            if (shoppingCart != null && shoppingCart.CartItems.Count > 0)
+            {
+                shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => shoppingCart.CartItems.Count * u.Seat.SeatPrice);
+            }
+            return Ok(shoppingCart);
             
         }
 
@@ -109,12 +112,36 @@ namespace RailwayReservationAPI.Controllers
                     return Ok(_response);
                 } else
                 {
+                    if (shoppingCart.CartItems.Count() == 0)
+                    {
+                        _db.ShoppingCarts.Remove(shoppingCart);
+                    }
                     _db.CartItems.Remove(cartItemInCart);
                     _db.SaveChanges();
-                    return Ok(_response);
+                    _response.StatusCode = HttpStatusCode.Accepted;
+                    return Accepted(_response);
                 }
-                return _response;
             }
+        }
+        [HttpDelete("remove-from-cart")]
+        [Authorize]
+        public async Task<ActionResult<ApiResponse>> RemoveFromCart(int cartItemId, string userId)
+        {
+            CartItem cartItemToBeRemoved = _db.CartItems.FirstOrDefault(u => u.Id == cartItemId);
+            ShoppingCart shoppingCart = _db.ShoppingCarts.Include(u => u.CartItems).FirstOrDefault(u => u.UserId == userId);
+            if (cartItemToBeRemoved == null) {
+                return BadRequest();
+            }
+            _db.Remove(cartItemToBeRemoved);
+            _db.SaveChanges();
+            if(shoppingCart.CartItems.Count() <= 0)
+            {
+                _db.Remove(shoppingCart);
+                _db.SaveChanges();
+            }
+            _response.IsSuccess = true;
+            _response.StatusCode = HttpStatusCode.Accepted;
+            return Accepted(_response);
         }
     }
 }
