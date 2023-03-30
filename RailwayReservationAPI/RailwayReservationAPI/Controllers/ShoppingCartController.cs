@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RailwayReservationAPI.Data;
@@ -21,8 +22,9 @@ namespace RailwayReservationAPI.Controllers
             _db = db;
         }
         // 26a3cb2a-360a-451d-b69f-da1c93c0f9fe
+        // e8507a51-c99a-4077-9663-20b94db08f7b Khoi
         [HttpGet("get-cart")]
-        public async Task<ActionResult<ApiResponse>> GetShoppingCart(string userId)
+        public async Task<ActionResult<ShoppingCart>> GetShoppingCart(string userId)
         {   
                 ShoppingCart shoppingCart;
                 if (string.IsNullOrEmpty(userId))
@@ -31,22 +33,19 @@ namespace RailwayReservationAPI.Controllers
                 }
                 else
                 {
-                    shoppingCart = _db.ShoppingCarts.Include(u => u.CartItems)
-                    .ThenInclude(u => u.Seat)
-                    .FirstOrDefault(u => u.UserId == userId);
+                    shoppingCart = await _db.ShoppingCarts.Include(u => u.CartItems)
+                    .ThenInclude(u => u.Seat).ThenInclude(u => u.Carriage).ThenInclude(u => u.Train).ThenInclude(u => u.Track)
+                    .Include(u => u.CartItems)
+                    .ThenInclude(u => u.Seat).ThenInclude(u => u.Carriage).ThenInclude(u => u.CarriageType)
+                    .FirstOrDefaultAsync(u => u.UserId == userId);
                 }
-                // Trong cart thì chỉ có cart items, còn trong cart items thì mới có menu items nên phải dùng ThenInclude
-                if (shoppingCart.CartItems != null && shoppingCart.CartItems.Count > 0)
-                {
-                    shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => 1 * u.Seat.SeatPrice);
-                }
-                _response.Data = shoppingCart;
-                _response.StatusCode = HttpStatusCode.OK;
+                shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => 1 * u.Seat.SeatPrice); 
                 return Ok(shoppingCart);
             
         }
 
         [HttpPost("add-to-cart")]
+        [Authorize]
         public async Task<ActionResult<ApiResponse>> AddOrUpdateItemInCart([FromBody] CartRequestDTO model)
         {
             ShoppingCart shoppingCart = _db.ShoppingCarts.Include(u => u.CartItems).FirstOrDefault(u => u.UserId == model.UserId);
@@ -107,6 +106,11 @@ namespace RailwayReservationAPI.Controllers
                     _response.StatusCode = HttpStatusCode.OK;
                     _response.IsSuccess = true;
                     _response.Data = shoppingCart;
+                    return Ok(_response);
+                } else
+                {
+                    _db.CartItems.Remove(cartItemInCart);
+                    _db.SaveChanges();
                     return Ok(_response);
                 }
                 return _response;

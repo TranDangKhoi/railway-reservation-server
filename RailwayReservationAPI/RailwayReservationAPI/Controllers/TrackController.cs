@@ -48,7 +48,7 @@ namespace RailwayReservationAPI.Controllers
             _response.Data = tracks;
             return Ok(tracks);
         }
-        [HttpGet("{trackId}")]
+        [HttpGet("bytrackid/{trackId}")]
         public async Task<ActionResult<ApiResponse>> GetTrackById(int trackId)
         {
             //int miliseconds = 2000;
@@ -63,6 +63,24 @@ namespace RailwayReservationAPI.Controllers
                 _response.ErrorMessages = "Chuyến đi không tồn tại, vui lòng kiểm tra lại";
                 return NotFound(_response);
             }
+            _response.IsSuccess = true;
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Data = foundTrack;
+            return Ok(foundTrack);
+        }
+
+        [HttpGet("byseatid/{seatId}")]
+        public async Task<ActionResult<ApiResponse>> GetTrackBySeatId(int seatId)
+        {
+            Track foundTrack = _db.Tracks.Include(u => u.Train).ThenInclude(u => u.Carriages).ThenInclude(u => u.Seats).FirstOrDefault(u => u.Train.Carriages.Any(s => s.Seats.Any(s => s.Id == seatId)));
+            if(foundTrack == null)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ErrorMessages = "Không tìm được ghế";
+                return NotFound(_response);
+            }
+
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
             _response.Data = foundTrack;

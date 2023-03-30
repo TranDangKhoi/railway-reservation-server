@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace RailwayReservationAPI.Models
 {
@@ -15,5 +16,6 @@ namespace RailwayReservationAPI.Models
         public CarriageType CarriageType { get; set; }
         [ForeignKey("TrainId")]
         public int TrainId { get; set; }
+        public Train Train { get; set; }
     }
 }

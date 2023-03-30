@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace RailwayReservationAPI.Models
 {
@@ -11,6 +12,6 @@ namespace RailwayReservationAPI.Models
         public int SeatStatus { get; set; }
         [ForeignKey("CarriageId")]
         public int CarriageId { get; set; }
-
+        public Carriage Carriage { get; set; }
     }
 }

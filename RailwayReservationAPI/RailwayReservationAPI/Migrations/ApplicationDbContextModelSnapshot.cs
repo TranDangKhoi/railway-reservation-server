@@ -279,10 +279,19 @@ namespace RailwayReservationAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CarriageId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SeatId")
                         .HasColumnType("int");
 
                     b.Property<int>("ShoppingCartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrackId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrainId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

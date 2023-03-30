@@ -11,6 +11,7 @@ namespace RailwayReservationAPI.Models
         [Required]
         public string Name { get; set; }
         public ICollection<Carriage> Carriages { get; set; }
+        public Track Track { get; set; }
         [NotMapped]
         public int TotalCarriages { get; set; }
         [NotMapped]

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace RailwayReservationAPI.Models
 {
@@ -17,8 +18,8 @@ namespace RailwayReservationAPI.Models
         public string ArrivalStation { get; set; }
         [Required]  
         public DateTime ArrivalTime { get; set; }
-        public int TrainId { get; set; }
         [ForeignKey("TrainId")]
+        public int TrainId { get; set; }
         public Train Train { get; set; }
 
     }

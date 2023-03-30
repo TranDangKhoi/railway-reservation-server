@@ -6,7 +6,7 @@ namespace RailwayReservationAPI.Models
     {
         public int Id { get; set; }
         public string UserId { get; set; }
-        public ICollection<CartItem> CartItems { get; set; }
+        public virtual ICollection<CartItem> CartItems { get; set; }
 
         [NotMapped]
         public double CartTotal { get; set; }
