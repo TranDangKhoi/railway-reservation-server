@@ -38,7 +38,6 @@ namespace RailwayReservationAPI.Controllers
             };
             _db.Add(newCarriageType);
             _db.SaveChanges();
-            
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.Created;
             _response.Data = newCarriageType;

@@ -46,7 +46,7 @@ namespace RailwayReservationAPI.Controllers
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
             _response.Data = tracks;
-            return Ok(tracks);
+            return Ok(_response);
         }
         [HttpGet("bytrackid/{trackId}")]
         public async Task<ActionResult<ApiResponse>> GetTrackById(int trackId)
@@ -66,7 +66,7 @@ namespace RailwayReservationAPI.Controllers
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
             _response.Data = foundTrack;
-            return Ok(foundTrack);
+            return Ok(_response);
         }
 
         [HttpGet("byseatid/{seatId}")]
@@ -84,7 +84,7 @@ namespace RailwayReservationAPI.Controllers
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
             _response.Data = foundTrack;
-            return Ok(foundTrack);
+            return Ok(_response);
         }
 
         [HttpGet("find")]
@@ -119,7 +119,8 @@ namespace RailwayReservationAPI.Controllers
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
             _response.Data = foundTrackFromDb;
-            return Ok(foundTrackFromDb);
+            return Ok(_response);
+
         }
 
         [HttpPost]

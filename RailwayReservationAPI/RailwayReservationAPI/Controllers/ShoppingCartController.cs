@@ -24,8 +24,10 @@ namespace RailwayReservationAPI.Controllers
         // 26a3cb2a-360a-451d-b69f-da1c93c0f9fe
         // e8507a51-c99a-4077-9663-20b94db08f7b Khoi
         [HttpGet("get-cart")]
-        public async Task<ActionResult<ShoppingCart>> GetShoppingCart(string userId)
+        public async Task<ActionResult<ApiResponse>> GetShoppingCart(string userId)
         {   
+            try
+            {
                 ShoppingCart shoppingCart;
                 if (string.IsNullOrEmpty(userId))
                 {
@@ -33,18 +35,26 @@ namespace RailwayReservationAPI.Controllers
                 }
                 else
                 {
-                    shoppingCart =  _db.ShoppingCarts.Include(u => u.CartItems)
+                    shoppingCart = _db.ShoppingCarts.Include(u => u.CartItems)
                     .ThenInclude(u => u.Seat).ThenInclude(u => u.Carriage).ThenInclude(u => u.Train).ThenInclude(u => u.Track)
                     .Include(u => u.CartItems)
                     .ThenInclude(u => u.Seat).ThenInclude(u => u.Carriage).ThenInclude(u => u.CarriageType)
                     .FirstOrDefault(u => u.UserId == userId);
                 }
-            if (shoppingCart != null && shoppingCart.CartItems.Count > 0)
+                if (shoppingCart != null && shoppingCart.CartItems.Count > 0)
+                {
+                    shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => shoppingCart.CartItems.Count * u.Seat.SeatPrice);
+                }
+                _response.IsSuccess = true;
+                _response.Data = shoppingCart;
+                _response.StatusCode = HttpStatusCode.OK;
+            } catch (Exception ex)
             {
-                shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => shoppingCart.CartItems.Count * u.Seat.SeatPrice);
+                _response.IsSuccess = false;
+                _response.ErrorMessages = ex.ToString();
+                _response.StatusCode = HttpStatusCode.BadRequest;
             }
-            return Ok(shoppingCart);
-            
+            return _response;
         }
 
         [HttpPost("add-to-cart")]

@@ -50,9 +50,15 @@ namespace RailwayReservationAPI.Controllers
                 .Include(u => u.Carriages).ThenInclude(u => u.Seats)
                 .Include(u => u.Carriages).ThenInclude(u => u.CarriageType).FirstOrDefault(u => u.Id == trainId);
             if(foundTrainFromDb == null) {
-                return NotFound();
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ErrorMessages = "Không tìm thấy tàu";
+                return NotFound(_response);
             }
-            return Ok();
+            _response.IsSuccess = true;
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Data = foundTrainFromDb;
+            return Ok(_response);
         }
 
         [HttpPost]
