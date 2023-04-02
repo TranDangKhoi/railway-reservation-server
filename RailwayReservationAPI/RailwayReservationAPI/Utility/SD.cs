@@ -8,5 +8,10 @@
 
         public const int status_reserved = 0;
         public const int status_open = 1;
+
+        public const string order_pending = "Pending";
+        public const string order_confirmed = "Confirmed";
+        public const string order_completed = "Completed";
+
     }
 }

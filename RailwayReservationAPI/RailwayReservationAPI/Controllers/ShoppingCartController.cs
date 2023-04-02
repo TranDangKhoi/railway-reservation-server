@@ -43,7 +43,7 @@ namespace RailwayReservationAPI.Controllers
                 }
                 if (shoppingCart != null && shoppingCart.CartItems.Count > 0)
                 {
-                    shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => shoppingCart.CartItems.Count * u.Seat.SeatPrice);
+                    shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => 1 * u.Seat.SeatPrice);
                 }
                 _response.IsSuccess = true;
                 _response.Data = shoppingCart;

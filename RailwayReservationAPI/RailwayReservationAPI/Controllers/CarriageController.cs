@@ -35,7 +35,7 @@ namespace RailwayReservationAPI.Controllers
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
             _response.Data = foundCarriageFromDb;
-            return Ok(foundCarriageFromDb);
+            return Ok(_response);
         }
 
         [HttpPost]
