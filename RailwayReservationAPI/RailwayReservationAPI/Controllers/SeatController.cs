@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RailwayReservationAPI.Data;
@@ -53,6 +54,20 @@ namespace RailwayReservationAPI.Controllers
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.Created;
             _response.Data = newSeat;
+            return Ok(_response);
+        }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult<ApiResponse>> UpdateSeatStatus([FromBody] SeatUpdateDTO dto)
+        {
+            Seat foundSeatFromDb = _db.Seats.FirstOrDefault(u => u.Id == dto.Id);
+            foundSeatFromDb.SeatStatus = dto.SeatStatus;
+            _db.Update(foundSeatFromDb);
+            _db.SaveChanges();
+            _response.IsSuccess = true;
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Data = foundSeatFromDb;
             return Ok(_response);
         }
 

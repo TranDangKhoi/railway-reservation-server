@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RailwayReservationAPI.Data;
@@ -22,6 +23,7 @@ namespace RailwayReservationAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<ApiResponse>> GetOrders(string userId)
         {
             try
@@ -53,6 +55,7 @@ namespace RailwayReservationAPI.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<ActionResult<ApiResponse>> GetOrders(int id)
         {
             try
@@ -85,6 +88,7 @@ namespace RailwayReservationAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<ApiResponse>> CreateOrder([FromBody] OrderHeaderCreateDTO orderHeaderDTO)
         {
             // Cái đoạn này á, thực ra là truyền vào mấy cái thông tin (PickupEmail, PickupPhoneNumber, ...) này cũng được, hợp lí khi để cho 

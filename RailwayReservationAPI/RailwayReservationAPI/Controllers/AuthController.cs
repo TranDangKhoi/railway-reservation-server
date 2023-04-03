@@ -115,7 +115,9 @@ namespace RailwayReservationAPI.Controllers
                 // Thay thế Username thành Email
                 NormalizedEmail = model.Email.ToUpper(),
                 Fullname = model.Fullname,
-                Avatar = $"https://ui-avatars.com/api/?background=random&name={model.Fullname}"
+                Avatar = $"https://ui-avatars.com/api/?background=random&name={model.Fullname}",
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
             };
             
             try

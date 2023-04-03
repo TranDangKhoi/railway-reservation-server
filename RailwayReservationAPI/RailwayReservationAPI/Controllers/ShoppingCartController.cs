@@ -24,6 +24,7 @@ namespace RailwayReservationAPI.Controllers
         // 26a3cb2a-360a-451d-b69f-da1c93c0f9fe
         // e8507a51-c99a-4077-9663-20b94db08f7b Khoi
         [HttpGet("get-cart")]
+        [Authorize]
         public async Task<ActionResult<ApiResponse>> GetShoppingCart(string userId)
         {   
             try

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RailwayReservationAPI.Data;
@@ -23,6 +24,7 @@ namespace RailwayReservationAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<ApiResponse>> MakePayment(string userId)
         {
             ShoppingCart shoppingCart = _db.ShoppingCarts
