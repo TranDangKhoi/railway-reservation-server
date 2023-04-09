@@ -36,10 +36,16 @@ namespace RailwayReservationAPI.Controllers
                 }
                 else
                 {
-                    shoppingCart = _db.ShoppingCarts.Include(u => u.CartItems)
-                    .ThenInclude(u => u.Seat).ThenInclude(u => u.Carriage).ThenInclude(u => u.Train).ThenInclude(u => u.Track)
+                    shoppingCart = _db.ShoppingCarts
                     .Include(u => u.CartItems)
-                    .ThenInclude(u => u.Seat).ThenInclude(u => u.Carriage).ThenInclude(u => u.CarriageType)
+                    .ThenInclude(u => u.Seat)
+                    .ThenInclude(u => u.Carriage)
+                    .ThenInclude(u => u.Train)
+                    .ThenInclude(u => u.Track)
+                    .Include(u => u.CartItems)
+                    .ThenInclude(u => u.Seat)
+                    .ThenInclude(u => u.Carriage)
+                    .ThenInclude(u => u.CarriageType)
                     .FirstOrDefault(u => u.UserId == userId);
                 }
                 if (shoppingCart != null && shoppingCart.CartItems.Count > 0)
@@ -62,7 +68,7 @@ namespace RailwayReservationAPI.Controllers
         [Authorize]
         public async Task<ActionResult<ApiResponse>> AddOrUpdateItemInCart([FromBody] CartRequestDTO model)
         {
-            ShoppingCart shoppingCart = _db.ShoppingCarts.Include(u => u.CartItems).FirstOrDefault(u => u.UserId == model.UserId);
+            ShoppingCart shoppingCart = _db.ShoppingCarts.Include(u => u.CartItems).ThenInclude(u => u.Seat).FirstOrDefault(u => u.UserId == model.UserId);
             Seat seat = _db.Seats.FirstOrDefault(u => u.Id == model.SeatId);
             if (seat == null)
             {

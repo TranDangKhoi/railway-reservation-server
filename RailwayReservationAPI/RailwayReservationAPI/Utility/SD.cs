@@ -11,7 +11,7 @@
 
         public const string order_pending = "Pending";
         public const string order_confirmed = "Confirmed";
-        public const string order_completed = "Completed";
+        public const string order_cancelled = "Cancelled";
 
     }
 }

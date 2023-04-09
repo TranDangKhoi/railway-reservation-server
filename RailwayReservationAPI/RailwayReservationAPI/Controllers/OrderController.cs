@@ -24,7 +24,7 @@ namespace RailwayReservationAPI.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<ApiResponse>> GetOrders(string userId)
+        public async Task<ActionResult<ApiResponse>> GetOrders()
         {
             try
             {
@@ -32,17 +32,48 @@ namespace RailwayReservationAPI.Controllers
                     .Include(u => u.OrderDetails)
                     .ThenInclude(u => u.Seat)
                     .OrderByDescending(u => u.OrderHeaderId);
-                if (!string.IsNullOrEmpty(userId))
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.Data = orderHeaders;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = ex.ToString();
+            }
+            return _response;
+        }
+
+        
+        [HttpGet("by-user-id/{userId}")]
+        public async Task<ActionResult<ApiResponse>> GetOrderByUserId(string userId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(userId))
                 {
-                    // Nếu truyền vào userId thì show ra orders của thằng đó thoai
-                    _response.Data = orderHeaders.Where(u => u.ApplicationUserId == userId);
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
                 }
-                else
+                var orderHeaders = _db.OrderHeaders
+                    .Include(u => u.OrderDetails)
+                    .ThenInclude(u => u.Seat)
+                    .ThenInclude(u => u.Carriage)
+                    .ThenInclude(u => u.Train)
+                    .ThenInclude(u => u.Track)
+                    .Include(u => u.OrderDetails)
+                    .ThenInclude(u => u.Seat)
+                    .ThenInclude(u => u.Carriage)
+                    .ThenInclude(u => u.CarriageType)
+                    .Include(u => u.ApplicationUser)
+                    .Where(u => u.ApplicationUser.Id == userId)
+                    .OrderByDescending(u => u.OrderDate);
+                if (orderHeaders == null)
                 {
-                    // Còn nếu không truyền userId nào vô thì show ra tất cả orders lunnn
-                    // Cái này để hiển thị trong trang admin
-                    _response.Data = orderHeaders;
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    return NotFound(_response);
                 }
+                _response.Data = orderHeaders;
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
@@ -54,28 +85,29 @@ namespace RailwayReservationAPI.Controllers
             return _response;
         }
 
-        [HttpGet("{id:int}")]
-        [Authorize]
-        public async Task<ActionResult<ApiResponse>> GetOrders(int id)
+        [HttpGet("by-order-id/{orderId}")]
+        public async Task<ActionResult<ApiResponse>> GetOrderDetailByOrderId(int orderId)
         {
             try
             {
-                if (id == 0)
-                {
-                    _response.StatusCode = HttpStatusCode.BadRequest;
-                    return BadRequest(_response);
-                }
-                // Moi dần thông tin từ thằng OrderHeader và đi sâu dần vào
-                var orderHeaders = _db.OrderHeaders
+                OrderHeader orderHeaderFoundFromDb = _db.OrderHeaders
                     .Include(u => u.OrderDetails)
                     .ThenInclude(u => u.Seat)
-                    .Where(u => u.OrderHeaderId == id);
-                if (orderHeaders == null)
+                    .ThenInclude(u => u.Carriage)
+                    .ThenInclude(u => u.Train)
+                    .ThenInclude(u => u.Track)
+                    .Include(u => u.OrderDetails)
+                    .ThenInclude(u => u.Seat)
+                    .ThenInclude(u => u.Carriage)
+                    .ThenInclude(u => u.CarriageType)
+                    .Include(u => u.ApplicationUser)
+                    .FirstOrDefault(u => u.OrderHeaderId == orderId);
+                if (orderHeaderFoundFromDb == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     return NotFound(_response);
                 }
-                _response.Data = orderHeaders;
+                _response.Data = orderHeaderFoundFromDb;
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
@@ -130,6 +162,41 @@ namespace RailwayReservationAPI.Controllers
                     _response.StatusCode = HttpStatusCode.Created;
                     return Ok(_response);
                 }
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = ex.ToString();
+            }
+            return _response;
+        }
+
+        [HttpPut("update-status")]
+        public async Task<ActionResult<ApiResponse>> UpdateOrderHeader([FromBody] OrderHeaderUpdateDTO dto)
+        {
+            try
+            {
+                if (dto == null)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
+                OrderHeader orderFromDb = _db.OrderHeaders.FirstOrDefault(u => u.OrderHeaderId == dto.OrderHeaderId);
+                if (orderFromDb == null)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
+                if (!string.IsNullOrEmpty(dto.Status))
+                {
+                    orderFromDb.Status = dto.Status;
+                }
+                _db.SaveChanges();
+                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                return Ok(_response);
             }
             catch (Exception ex)
             {
