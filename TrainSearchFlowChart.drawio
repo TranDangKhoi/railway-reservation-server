@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-04-11T16:10:58.801Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36" etag="2vMWIvTTfvYBijRObRBL" version="21.1.5" type="github">
+<mxfile host="app.diagrams.net" modified="2023-04-11T16:39:51.951Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36" etag="QTup2HFB4zuDZ8nbz7vF" version="21.1.5" type="github">
   <diagram name="Trang-1" id="AAPdcEaoj6SRhzR8smp5">
-    <mxGraphModel dx="1974" dy="1780" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2958" dy="1864" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -198,6 +198,83 @@
         </mxCell>
         <mxCell id="QSV4XBkTvfAadiuLDToA-19" value="Add seats to user&#39;s cart and show a successful message" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
           <mxGeometry x="760" y="1440" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QSV4XBkTvfAadiuLDToA-23" target="pognMg5DVC33WINBG95b-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-23" value="Sơ đồ luồng đặt vé" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=17;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="320" y="-480" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QSV4XBkTvfAadiuLDToA-25" target="QSV4XBkTvfAadiuLDToA-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-25" value="Sơ đồ luồng thanh toán đơn hàng" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=17;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="-830" y="-480" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QSV4XBkTvfAadiuLDToA-26" target="QSV4XBkTvfAadiuLDToA-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-26" value="Navigate to payment page" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="-830" y="-400" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QSV4XBkTvfAadiuLDToA-28" target="QSV4XBkTvfAadiuLDToA-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.422;entryY=0.007;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="QSV4XBkTvfAadiuLDToA-28" target="QSV4XBkTvfAadiuLDToA-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-28" value="Submit the information form" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="-830" y="-240" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QSV4XBkTvfAadiuLDToA-29" target="QSV4XBkTvfAadiuLDToA-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-29" value="One of the fields is empty or invalid" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="-1040" y="-120" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QSV4XBkTvfAadiuLDToA-30" target="QSV4XBkTvfAadiuLDToA-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-30" value="All fields are valid" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="-640" y="-120" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-34" value="Display errors and refuse to show payment form" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="-1040" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="QSV4XBkTvfAadiuLDToA-36">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-559.818181818182" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-36" value="Show payment form" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="-640" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QSV4XBkTvfAadiuLDToA-39" target="QSV4XBkTvfAadiuLDToA-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QSV4XBkTvfAadiuLDToA-39" target="QSV4XBkTvfAadiuLDToA-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-39" value="Enter card information and region" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="-640" y="200" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QSV4XBkTvfAadiuLDToA-40" target="QSV4XBkTvfAadiuLDToA-45">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-40" value="Card information is invalid" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="-840" y="320" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-47" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="QSV4XBkTvfAadiuLDToA-41" target="QSV4XBkTvfAadiuLDToA-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-41" value="Card information is valid" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="-440" y="320" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-44" value="Proceed payment and save the order to order history" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="-440" y="480" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QSV4XBkTvfAadiuLDToA-45" value="Display error and refuse to proceed payment" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="-840" y="480" width="160" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
