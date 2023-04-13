@@ -820,9 +820,6 @@
           }
         }
       },
-      "Q/1.4.1": {
-        "type": "package"
-      },
       "Stripe.net/41.13.0": {
         "type": "package",
         "dependencies": {
@@ -2755,19 +2752,6 @@
         "packageIcon.png"
       ]
     },
-    "Q/1.4.1": {
-      "sha512": "2ysUX2G5MOrl86zTt48yZ9jQxgCImZggoHH9hQoy+EGtl+BXcb83GgP0Pm0UzEJxc6+dkQSzGeKEIdRCAZAG/Q==",
-      "type": "package",
-      "path": "q/1.4.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "content/Scripts/q.js",
-        "content/Scripts/q.min.js",
-        "q.1.4.1.nupkg.sha512",
-        "q.nuspec"
-      ]
-    },
     "Stripe.net/41.13.0": {
       "sha512": "CDtQKL8ksU6HJaI7kN17FSDWcJ5GrBTq/L7WbWqWusVctAcM8qqI6+RSE7sZ87fY0DzcZFp8xXxYoDpafAqOzA==",
       "type": "package",
@@ -4204,8 +4188,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.4",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.4",
       "Stripe.net >= 41.13.0",
-      "Swashbuckle.AspNetCore >= 6.5.0",
-      "q >= 1.4.1"
+      "Swashbuckle.AspNetCore >= 6.5.0"
     ]
   },
   "packageFolders": {
@@ -4276,10 +4259,6 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.5.0, )"
-          },
-          "q": {
-            "target": "Package",
-            "version": "[1.4.1, )"
           }
         },
         "imports": [

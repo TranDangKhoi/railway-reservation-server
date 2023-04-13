@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FY6E5Sj1lozg+PoYpPrSYAOv5SqH74AFkrTFb7VQM3z/uzZxbixUaGVcvCLqQ8GjXYlyUba2P5yOADtUR18Qhw==",
+  "dgSpecHash": "19zId2AcK+8Soo41fg/Oh6L/O0iF4CqRYog9ogA2negzEZpvYtS16w4CZZ9InZaZG7fZwyARcZ21rjPHgopVew==",
   "success": true,
   "projectFilePath": "D:\\Github\\railway-reservation-server\\RailwayReservationAPI\\RailwayReservationAPI\\RailwayReservationAPI.csproj",
   "expectedPackageFiles": [
@@ -52,7 +52,6 @@
     "C:\\Users\\HP Victus\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\HP Victus\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\HP Victus\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
-    "C:\\Users\\HP Victus\\.nuget\\packages\\q\\1.4.1\\q.1.4.1.nupkg.sha512",
     "C:\\Users\\HP Victus\\.nuget\\packages\\stripe.net\\41.13.0\\stripe.net.41.13.0.nupkg.sha512",
     "C:\\Users\\HP Victus\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\HP Victus\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
