@@ -7,7 +7,8 @@ Click here to navigate: [Frontend Repository Link](https://github.com/TranDangKh
 1. Clone this repository
 2. Change the connection string in `appsettings.json` to your own connection string
 3. Open up Package Manager Console in Visual Studio (Alt + T + N + O), type in `Update-Package` and press Enter
-4. Run the project ^_^
+4. In the Package Manager Console, type in `update-database` and press Enter
+5. Run the project ^_^
 
 ## What i was using and is gonna be using in this project 🤔
 
