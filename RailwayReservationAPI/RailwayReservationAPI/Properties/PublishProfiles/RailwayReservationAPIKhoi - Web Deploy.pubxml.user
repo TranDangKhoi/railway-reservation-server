@@ -7,12 +7,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA95mXWCOa1U+4JL6VWXPnQgAAAAACAAAAAAAQZgAAAAEAACAAAAD/S2KNahdtO3KkbrIe8HeyHDZLTddd8wCU/XHzXvtL3gAAAAAOgAAAAAIAACAAAABdvtCZdAdEhcyg2ig6BwvcDl1gPwL6l5Bg+0BWap3MY4AAAABMdVVi0VHuawFKhomMJZraViHrRFzpPW8nDl9MNXeCFnmNCKgMs1UXHGVkcFWk4nmFYK34OOkD54aRgk3GLIvPDIlprZvqTpPiKodZSLYwiQgyS/EYm9UUw8S5E5/VjlYosXmFkzsGbZ+HqcF4HIKo90+vgg3TB5cunW8+z741LkAAAABYNLT3FSdSfXWwAcp2pPW1CBZqQrDE7qpsRHCZ/YPbEueioxav96Gv83wo9f1ssZU1QfNYB45A84AocO7pLsgu</EncryptedPassword>
-    <History>True|2023-04-27T15:40:25.8825538Z;True|2023-04-27T22:38:09.4581825+07:00;</History>
+    <History>True|2023-04-27T17:10:17.5444757Z;True|2023-04-28T00:05:45.3689110+07:00;True|2023-04-27T23:11:06.0806749+07:00;True|2023-04-27T22:40:25.8825538+07:00;True|2023-04-27T22:38:09.4581825+07:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
-    <DestinationConnectionStrings Include="AzureConnection">
-      <Value>Server=LAPTOP-87VE26VM%3bDatabase=RailwayReservation%3bTrustServerCertificate=True%3bTrusted_Connection=True</Value>
+    <DestinationConnectionStrings Include="DefaultDbConnection">
+      <Value>Server=tcp:railway-database.database.windows.net,1433%3bInitial Catalog=railway-database%3bPersist Security Info=False%3bUser ID=sqladmin%3bPassword=Cgvkimdong123%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
     </DestinationConnectionStrings>
   </ItemGroup>
 </Project>
