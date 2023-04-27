@@ -14,8 +14,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.4",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.4",
           "Stripe.net": "41.13.0",
-          "Swashbuckle.AspNetCore": "6.5.0",
-          "Q": "1.4.1"
+          "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
           "RailwayReservationAPI.dll": {}
@@ -492,7 +491,6 @@
           }
         }
       },
-      "Q/1.4.1": {},
       "Stripe.net/41.13.0": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.3",
@@ -1106,13 +1104,6 @@
       "sha512": "sha512-6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
       "path": "newtonsoft.json/12.0.3",
       "hashPath": "newtonsoft.json.12.0.3.nupkg.sha512"
-    },
-    "Q/1.4.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-2ysUX2G5MOrl86zTt48yZ9jQxgCImZggoHH9hQoy+EGtl+BXcb83GgP0Pm0UzEJxc6+dkQSzGeKEIdRCAZAG/Q==",
-      "path": "q/1.4.1",
-      "hashPath": "q.1.4.1.nupkg.sha512"
     },
     "Stripe.net/41.13.0": {
       "type": "package",
