@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA95mXWCOa1U+4JL6VWXPnQgAAAAACAAAAAAAQZgAAAAEAACAAAAD/S2KNahdtO3KkbrIe8HeyHDZLTddd8wCU/XHzXvtL3gAAAAAOgAAAAAIAACAAAABdvtCZdAdEhcyg2ig6BwvcDl1gPwL6l5Bg+0BWap3MY4AAAABMdVVi0VHuawFKhomMJZraViHrRFzpPW8nDl9MNXeCFnmNCKgMs1UXHGVkcFWk4nmFYK34OOkD54aRgk3GLIvPDIlprZvqTpPiKodZSLYwiQgyS/EYm9UUw8S5E5/VjlYosXmFkzsGbZ+HqcF4HIKo90+vgg3TB5cunW8+z741LkAAAABYNLT3FSdSfXWwAcp2pPW1CBZqQrDE7qpsRHCZ/YPbEueioxav96Gv83wo9f1ssZU1QfNYB45A84AocO7pLsgu</EncryptedPassword>
+    <History>True|2023-04-27T15:40:25.8825538Z;True|2023-04-27T22:38:09.4581825+07:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="AzureConnection">
+      <Value>Server=LAPTOP-87VE26VM%3bDatabase=RailwayReservation%3bTrustServerCertificate=True%3bTrusted_Connection=True</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>
