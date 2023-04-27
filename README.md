@@ -9,6 +9,7 @@ Click here to navigate: [Frontend Repository Link](https://github.com/TranDangKh
 3. Open up Package Manager Console in Visual Studio (Alt + T + N + O), type in `Update-Package` and press Enter
 4. In the Package Manager Console, type in `update-database` and press Enter
 5. Run the project ^_^
+6. NOTE: REMEMBER TO ALSO OPEN THE FRONT-END PROJECT AND CHANGE THE URL IN `**http.ts**` FILE to your own API's url if there's anything gone wrong
 
 ## What i was using and is gonna be using in this project 🤔
 
